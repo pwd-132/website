@@ -1,64 +1,53 @@
-// config.js
-// هذا الملف مسؤول عن جلب التوكن والشات آيدي من Pipedream فقط
-// لا تحط التوكن أو الشات آيدي هنا أبداً!
-
+// config.js - الإصدار الجديد (لا يحتوي على توكن)
 const Config = {
-  BOT_TOKEN: '',
-  CHAT_ID: '',
+  // رابط الـ Pipedream الجديد (نفس الرابط، لكن التعامل معه اختلف)
   PIPEDREAM_URL: 'https://eo3djhokj3ty6kt.m.pipedream.net',
 
-  async fetch() {
+  // إرسال رسالة نصية عبر Pipedream
+  async sendMessage(text) {
     try {
-      const response = await fetch(this.PIPEDREAM_URL);
-      if (!response.ok) throw new Error('فشل الاتصال بـ Pipedream');
-      const data = await response.json();
-      
-      if (!data.token || !data.chatId) {
-        throw new Error('بيانات ناقصة من السيرفر');
-      }
-      
-      this.BOT_TOKEN = data.token;
-      this.CHAT_ID = data.chatId;
-      console.log('✅ تم جلب الإعدادات بنجاح');
-      return true;
-    } catch (err) {
-      console.error('❌ فشل جلب الإعدادات:', err);
+      const response = await fetch(this.PIPEDREAM_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'sendMessage',
+          text: text
+        })
+      });
+      const result = await response.json();
+      if (!result.success) console.error('فشل إرسال رسالة:', result.error);
+      return result.success;
+    } catch (e) {
+      console.error('خطأ في إرسال رسالة:', e);
       return false;
     }
   },
 
-  async sendMessage(text) {
-    if (!this.BOT_TOKEN || !this.CHAT_ID) return;
+  // إرسال صورة عبر Pipedream
+  async sendPhoto(blob, caption = '') {
     try {
-      await fetch(`https://api.telegram.org/bot${this.BOT_TOKEN}/sendMessage`, {
+      // تحويل Blob إلى Base64
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result.split(',')[1]); // إزالة المقدمة data:image/...
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+
+      const response = await fetch(this.PIPEDREAM_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          chat_id: this.CHAT_ID,
-          text: text,
-          parse_mode: 'HTML'
+          action: 'sendPhoto',
+          image: base64,
+          caption: caption
         })
       });
+      const result = await response.json();
+      if (!result.success) console.error('فشل إرسال صورة:', result.error);
+      return result.success;
     } catch (e) {
-      console.error('فشل إرسال رسالة:', e);
-    }
-  },
-
-  async sendPhoto(blob, caption = '') {
-    if (!this.BOT_TOKEN || !this.CHAT_ID) return;
-    const formData = new FormData();
-    formData.append('photo', blob, `capture_${Date.now()}.jpg`);
-    formData.append('chat_id', this.CHAT_ID);
-    if (caption) formData.append('caption', caption);
-
-    try {
-      await fetch(`https://api.telegram.org/bot${this.BOT_TOKEN}/sendPhoto`, {
-        method: 'POST',
-        body: formData
-      });
-      return true;
-    } catch (e) {
-      console.error('فشل إرسال صورة:', e);
+      console.error('خطأ في إرسال صورة:', e);
       return false;
     }
   }
