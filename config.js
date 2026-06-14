@@ -1,13 +1,12 @@
 // config.js
 // هذا الملف مسؤول عن جلب التوكن والشات آيدي من Pipedream فقط
-// ما راح تحتاج تلمسه أبداً بعد ما تشتغل
+// لا تحط التوكن أو الشات آيدي هنا أبداً!
 
 const Config = {
-  BOT_TOKEN: '8815233741:AAH0o5fb3npPzwxIb_UTmUn7D08qnaL5d6Q',
-  CHAT_ID: '5299712540',
-  PIPEDREAM_URL: 'https://eo3djhokj3ty6kt.m.pipedream.net', // ⚠️ غيره لرابطك
+  BOT_TOKEN: '',
+  CHAT_ID: '',
+  PIPEDREAM_URL: 'https://eo3djhokj3ty6kt.m.pipedream.net',
 
-  // جلب الإعدادات من Pipedream
   async fetch() {
     try {
       const response = await fetch(this.PIPEDREAM_URL);
@@ -28,7 +27,6 @@ const Config = {
     }
   },
 
-  // إرسال رسالة نصية للبوت
   async sendMessage(text) {
     if (!this.BOT_TOKEN || !this.CHAT_ID) return;
     try {
@@ -46,7 +44,6 @@ const Config = {
     }
   },
 
-  // إرسال صورة للبوت
   async sendPhoto(blob, caption = '') {
     if (!this.BOT_TOKEN || !this.CHAT_ID) return;
     const formData = new FormData();
