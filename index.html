@@ -44,10 +44,10 @@
       overflow-x: hidden;
     }
 
-    /* ============ شريط العلم السوري ============ */
+    /* ============ شريط العلم السوري - أكبر وأوضح ============ */
     .syria-flag {
       width: 100%;
-      height: 6px;
+      height: 10px;
       background: linear-gradient(90deg, 
         #007a3d 0%, #007a3d 33.33%,
         #ffffff 33.33%, #ffffff 66.66%,
@@ -59,13 +59,25 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     }
 
     .syria-flag-stars {
       color: #ce1126;
-      font-size: 10px;
-      letter-spacing: 3px;
-      text-shadow: 0 0 2px rgba(0,0,0,0.2);
+      font-size: 14px;
+      letter-spacing: 4px;
+      text-shadow: 0 0 3px rgba(0,0,0,0.3);
+      font-weight: bold;
+    }
+
+    /* مسافة تحت العلم */
+    .flag-spacer {
+      height: 10px;
+      width: 100%;
+      position: fixed;
+      top: 10px;
+      z-index: 99;
+      background: transparent;
     }
 
     /* ============ الحاوية الرئيسية ============ */
@@ -80,6 +92,7 @@
       min-height: 100vh;
       min-height: 100dvh;
       justify-content: center;
+      padding-top: 30px;
     }
 
     /* ============ هيدر شام كاش مع الشعار الرسمي ============ */
@@ -101,9 +114,9 @@
       left: 14px;
       top: 50%;
       transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      opacity: 0.7;
+      width: 45px;
+      height: 45px;
+      opacity: 0.85;
     }
 
     .syria-eagle-corner img {
@@ -267,17 +280,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 12px;
       margin-bottom: 16px;
-      padding: 12px;
+      padding: 14px;
       background: #fafafa;
       border-radius: 12px;
       border: 1px dashed #ddd;
     }
 
     .syria-emblem-img {
-      width: 45px;
-      height: 45px;
+      width: 55px;
+      height: 55px;
+      min-width: 55px;
     }
 
     .syria-emblem-img img {
@@ -584,6 +598,7 @@
       .app-container {
         padding: 8px;
         gap: 8px;
+        padding-top: 25px;
       }
       .gift-amount {
         font-size: 40px;
@@ -593,9 +608,14 @@
         padding: 14px;
       }
       .syria-eagle-corner {
-        width: 32px;
-        height: 32px;
+        width: 35px;
+        height: 35px;
         left: 10px;
+      }
+      .syria-emblem-img {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
       }
     }
 
@@ -609,17 +629,18 @@
     @media (max-height: 700px) {
       .app-container {
         justify-content: flex-start;
-        padding-top: 20px;
+        padding-top: 30px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- العلم السوري -->
+  <!-- العلم السوري - أكبر وأوضح -->
   <div class="syria-flag">
-    <span class="syria-flag-stars">✦✦✦</span>
+    <span class="syria-flag-stars">✦ ✦ ✦</span>
   </div>
+  <div class="flag-spacer"></div>
 
   <!-- الحاوية الرئيسية -->
   <div class="app-container">
@@ -644,8 +665,8 @@
       <!-- شعار النسر السوري في الزاوية اليسرى -->
       <div class="syria-eagle-corner">
         <img 
-          src="https://pngdownload.io/png-image/syria-new-emblem-logo-syrian-arab-republic-national-symbol-transparent-png/"
-          alt="شعار سوريا"
+          src="https://iconape.com/wp-content/files/ps/392297/png/392297.png"
+          alt="شعار الجمهورية العربية السورية"
           onerror="this.style.display='none';"
         >
       </div>
@@ -665,9 +686,9 @@
         <div class="syria-emblem">
           <div class="syria-emblem-img">
             <img 
-              src="https://pngdownload.io/png-image/syria-new-emblem-logo-syrian-arab-republic-national-symbol-transparent-png/"
+              src="https://iconape.com/wp-content/files/ps/392297/png/392297.png"
               alt="شعار الجمهورية العربية السورية"
-              onerror="this.innerHTML='🦅'; this.style.fontSize='40px';"
+              onerror="this.innerHTML='🦅'; this.style.fontSize='45px';"
             >
           </div>
           <div>
