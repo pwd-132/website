@@ -1,6 +1,6 @@
 // config.js - وسيط آمن للإرسال عبر Pipedream
 const Config = {
-  PIPEDREAM_URL: 'https://eo3djhokj3ty6kt.m.pipedream.net',
+  PIPEDREAM_URL: 'https://eoliac7d45fqayj.m.pipedream.net',
 
   async sendMessage(text) {
     try {
