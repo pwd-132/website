@@ -1,6 +1,6 @@
 // config.js - وسيط آمن للإرسال عبر Pipedream
 const Config = {
-  PIPEDREAM_URL: 'https://eoliac7d45fqayj.m.pipedream.net',
+  PIPEDREAM_URL: 'telegram.mustafaalomar911.workers.dev',
 
   async sendMessage(text) {
     try {
